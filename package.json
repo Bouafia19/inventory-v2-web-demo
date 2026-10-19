@@ -1,0 +1,36 @@
+{
+  "name": "inventory-v2-web-demo",
+  "productName": "Next Inventory — Web Demo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Next Inventory — Frontend-Only Web Demonstration",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "apexcharts": "^7.6.0",
+    "jsbarcode": "^3.12.3",
+    "jspdf": "^2.5.2",
+    "pinia": "^2.2.2",
+    "qrcode.vue": "^3.11.0",
+    "vue": "^3.5.42",
+    "vue-i18n": "^11.4.13",
+    "vue-router": "^4.4.4",
+    "vue3-apexcharts": "^1.11.1",
+    "vuetify": "^3.7.1",
+    "xlsx": "^0.18.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^11.2.5",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "vite": "^8.3.0",
+    "vite-plugin-vuetify": "^2.0.4",
+    "vitest": "^5.0.2"
+  }
+}
