@@ -183,10 +183,41 @@ An automated end-to-end verification script (`verify-deployment.js`) was execute
 
 ---
 
-## 7. Render Service Decommissioning Recommendation
+## 7. Render Service Decommissioning Recommendation & Execution Status
 
-The Render static service `inventory-v2-web-demo` (`srv-dbb53umi0phs73f0b6qg`) remains online and serving traffic at `https://inventory-v2-web-demo.onrender.com`.
+The Render static service `inventory-v2-web-demo` (`srv-dbb53umi0phs73f0b6qg`) was decommissioned following successful production DNS cutover and global verification.
 
-### Recommendation:
-1. **Immediate Term:** Keep the Render static site active as a fallback while the Hostinger DNS CNAME propagates.
-2. **Post-DNS Cutover:** Once `inventory.nextchallenge.tech` resolves globally and SSL is verified, the Render service can be deleted or suspended directly in the Render dashboard to free up resources.
+---
+
+## 8. Final Production Verification & Render Decommissioning (November 5, 2026)
+
+### 8.1 Production Domain Live Activation
+- **Official Domain:** [https://inventory.nextchallenge.tech](https://inventory.nextchallenge.tech)
+- **Netlify Site:** `inventory-nextchallenge` (`b149c33f-60fd-4d16-8eab-e5f8528ca236`)
+- **DNS Authority:** Hostinger (`horizon.dns-parking.com`, `orbit.dns-parking.com`)
+- **DNS Record:** `inventory.nextchallenge.tech CNAME inventory-nextchallenge.netlify.app.` (Global resolution verified)
+- **SSL / TLS Certificate:** Issued by Let's Encrypt (`YE1`), valid Nov 5, 2026 – Feb 3, 2027.
+- **HTTPS Enforcement:** HTTP 301 redirection to HTTPS verified with HSTS (`max-age=31536000`).
+
+### 8.2 End-to-End Real Browser Verification on Official Domain
+An automated headless Chromium verification run directly against `https://inventory.nextchallenge.tech` completed with a 100% pass rate:
+- ✅ **Page Title & Metadata:** `Inventory V2 – Smart Inventory Management` (Canonical: `https://inventory.nextchallenge.tech`)
+- ✅ **Authentication:** Admin quick login authenticated, session token saved in `localStorage`.
+- ✅ **Dashboard:** 8 metric cards loaded, interactive ApexCharts SVG graphs rendered.
+- ✅ **Catalog & Search:** 20 Algerian hardware products loaded; search filter ("SSD") verified.
+- ✅ **Warehouses:** 3 depots (Main Warehouse, Secondary Depot, Showroom) verified.
+- ✅ **Sales & Invoicing:** 3 transactions loaded with receipt and invoice generation.
+- ✅ **POS System:** Point of Sale container loaded with cash register lifecycle.
+- ✅ **Persistence:** `next_inventory_v2_demo_db` verified in browser `localStorage`.
+- ✅ **SPA Routing:** Hard page reload on deep subpaths returns HTTP 200 without white screen.
+- ✅ **Zero Backend:** 0 external requests made outside local static bundle.
+- ✅ **Console Health:** Zero unhandled errors or critical warnings.
+
+### 8.3 Render Service Decommissioning Execution
+- **Service Name:** `inventory-v2-web-demo`
+- **Service ID:** `srv-dbb53umi0phs73f0b6qg`
+- **Decommission Date:** November 5, 2026
+- **Status:** **PERMANENTLY DELETED (CONFIRMED)**
+- **Verification:** Render CLI `render services delete srv-dbb53umi0phs73f0b6qg --confirm` executed with `deleted: true`. Subsequent query confirmed 0 inventory services remaining on Render. Old URL `https://inventory-v2-web-demo.onrender.com` returns HTTP 404 (`x-render-routing: no-server`).
+- **Safeguards Verified:** All 13 other Render services (Touriva APIs, Fleetora web/APIs, Next Challenge corporate web) remain 100% active and untouched.
+

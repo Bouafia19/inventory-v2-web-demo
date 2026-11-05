@@ -1,4 +1,15 @@
-# Next Inventory (Inventory V2) — Frontend-Only Web Demo
+# Next Inventory (Inventory V2) — Smart Inventory Management
+
+[![Official Production URL](https://img.shields.io/badge/Production-inventory.nextchallenge.tech-059669?style=for-the-badge&logo=netlify)](https://inventory.nextchallenge.tech)
+[![Netlify Status](https://img.shields.io/badge/Netlify-inventory--nextchallenge-00C7B7?style=for-the-badge&logo=netlify)](https://app.netlify.com/projects/inventory-nextchallenge)
+[![License](https://img.shields.io/badge/Platform-Frontend--Only%20(Zero--Backend)-2563EB?style=for-the-badge)](https://inventory.nextchallenge.tech)
+
+**Official Production URL:** [https://inventory.nextchallenge.tech](https://inventory.nextchallenge.tech)  
+**Hosting Infrastructure:** Netlify Global Edge Network (`inventory-nextchallenge`)  
+**Deployment Pipeline:** GitHub CI/CD (`Bouafia19/inventory-v2-web-demo` on branch `master`)  
+**Architecture:** 100% Frontend-Only SPA (Vue 3 + Vite 5 + Vuetify 3 + Pinia + LocalStorage Engine)  
+
+---
 
 A production-quality, standalone frontend web demonstration of **Next Inventory (Inventory V2)**, reproducing the complete desktop application's workflows, visual identity, business logic, and document printing directly in modern web browsers without Electron, Node.js backend services, or SQLite database servers.
 
@@ -7,7 +18,7 @@ A production-quality, standalone frontend web demonstration of **Next Inventory 
 ## 🌟 Key Highlights & Architectural Features
 
 - **100% Browser-Native Execution**: Runs entirely client-side using Vue 3, Vite, Vuetify 3, and Pinia. Zero server or database installations required.
-- **Persistent Local State**: Full CRUD persistence across page reloads using browser `localStorage` with relational simulation (products, multi-warehouse stock, ledger movements, sales, purchases, customers, and vendors).
+- **Persistent Local State**: Full CRUD persistence across page reloads using browser `localStorage` (`next_inventory_v2_demo_db`) with relational simulation (products, multi-warehouse stock, ledger movements, sales, purchases, customers, and vendors).
 - **Realistic Algerian Business Logic & Seed Data**:
   - Currency: Algerian Dinar (`DA`) formatted with centime accounting precision.
   - Tax compliance: TVA 19% & 9%, legal stamp duty (*Timbre fiscal* max 2,500 DA).
@@ -27,7 +38,29 @@ A production-quality, standalone frontend web demonstration of **Next Inventory 
 
 ---
 
-## 🚀 Quick Start
+## 🌐 Production Netlify Hosting & Custom Domain
+
+The Inventory V2 Web Demo is officially deployed on **Netlify** with custom DNS managed via **Hostinger**:
+
+| Setting | Configuration |
+|---|---|
+| **Production URL** | [https://inventory.nextchallenge.tech](https://inventory.nextchallenge.tech) |
+| **Netlify Site Name** | `inventory-nextchallenge` |
+| **Netlify Site ID** | `b149c33f-60fd-4d16-8eab-e5f8528ca236` |
+| **Production Branch** | `master` |
+| **Build Command** | `npm run build` (`vite build`) |
+| **Publish Directory** | `dist` |
+| **DNS Record** | `inventory.nextchallenge.tech CNAME inventory-nextchallenge.netlify.app.` |
+| **SSL / TLS** | Netlify Managed Let's Encrypt certificate (Automatic renewal, Forced HTTPS) |
+| **SPA Fallback Routing** | `/* /index.html 200` (Defined in `netlify.toml` and `public/_redirects`) |
+| **Security Headers** | `X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, HSTS |
+
+> [!NOTE]
+> The obsolete Render static service (`https://inventory-v2-web-demo.onrender.com`, `srv-dbb53umi0phs73f0b6qg`) was decommissioned on **November 5, 2026** following successful production verification.
+
+---
+
+## 🚀 Quick Start & Development
 
 ### 1. Prerequisites
 - Node.js 18+ or 20+
@@ -53,24 +86,16 @@ npm run build
 # Preview production build locally
 npm run preview
 ```
-The resulting `dist/` folder contains pure static HTML, CSS, and JS files ready to be deployed to any static host (Cloudflare Pages, GitHub Pages, Netlify, Vercel, AWS S3, or Nginx).
+The resulting `dist/` folder contains pure static HTML, CSS, and JS files ready to be deployed to Netlify Edge.
 
-### 5. Running Automated Tests
+### 5. Running Automated Tests & Browser Verification
 ```bash
+# Run unit & integration test suite (24 tests)
 npm test
+
+# Run full end-to-end headless browser verification suite
+node verify-deployment.js
 ```
-Executes the comprehensive Vitest unit and integration test suite covering:
-- Local storage repository engine
-- RBAC authentication and role management
-- Master data CRUD (Categories, Warehouses, Units, Brands, Taxes)
-- Product catalog and barcode validation
-- Multi-warehouse stock tracking and valuation calculation
-- Atomic sales transactions and receivable ledger charges
-- Purchase orders and vendor payable balances
-- Credit notes and debit notes with stock/ledger rollback
-- POS session lifecycle and held sales
-- Real-time dashboard KPI aggregations
-- Document generation (A4 invoices, 80mm receipts, barcode labels)
 
 ---
 
@@ -123,16 +148,9 @@ The web demo preserves 100% of the Vue renderer code from the original desktop a
 ```
 
 ### Storage Model
-All records are saved as JSON tables in browser `localStorage`:
-- `_demo_db_products`
-- `_demo_db_product_stock`
-- `_demo_db_stock_movements`
-- `_demo_db_sales` & `_demo_db_sale_items`
-- `_demo_db_purchases` & `_demo_db_purchase_items`
-- `_demo_db_customers` & `_demo_db_customer_ledger`
-- `_demo_db_vendors` & `_demo_db_vendor_ledger`
-- `_demo_db_pos_registers` & `_demo_db_pos_sessions`
-- `_demo_db_users`, `_demo_db_roles`, `_demo_db_settings`, etc.
+All records are saved as JSON tables in browser `localStorage` under the primary key:
+- **Key:** `next_inventory_v2_demo_db`
+- **Internal Tables:** `products`, `warehouses`, `product_stock`, `stock_movements`, `sales`, `sale_items`, `purchases`, `purchase_items`, `customers`, `customer_ledger`, `vendors`, `vendor_ledger`, `pos_registers`, `pos_sessions`, `users`, `roles`, `settings`.
 
 Clicking **"Reset Data"** in the top navigation bar clears modified keys and reloads the pristine seed dataset.
 
@@ -143,3 +161,9 @@ Clicking **"Reset Data"** in the top navigation bar clears modified keys and rel
 - This is a client-side demonstration designed for presentation, evaluation, and UX review.
 - Authentication and session states are simulated in browser storage; **do not use this demo for sensitive or production customer data**.
 - No credentials, tokens, or private customer records are transmitted over the network.
+
+---
+
+## 📚 Migration & Engineering Reports
+
+- [INVENTORY_V2_NETLIFY_MIGRATION_REPORT.md](INVENTORY_V2_NETLIFY_MIGRATION_REPORT.md): Complete Netlify migration audit, DNS verification, and Render decommissioning documentation.
