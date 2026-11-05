@@ -1,9 +1,9 @@
 {
   "name": "inventory-v2-web-demo",
-  "productName": "Next Inventory — Web Demo",
+  "productName": "Inventory V2 – Smart Inventory Management",
   "private": true,
   "version": "1.0.0",
-  "description": "Next Inventory — Frontend-Only Web Demonstration",
+  "description": "Inventory V2 – Smart Inventory Management",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "apexcharts": "^7.6.0",
+    "exceljs": "^4.4.0",
     "jsbarcode": "^3.12.3",
     "jspdf": "^2.5.2",
     "pinia": "^2.2.2",
